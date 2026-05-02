@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nutri Paw 🐾 | Cart</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #fffaf5;
+      color: #333;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #ffb347;
+      color: white;
+      font-size: 1.8em;
+      font-weight: bold;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .cart-container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+      gap: 15px;
+    }
+    .cart-item h3 {
+      margin: 0;
+      font-size: 1.1em;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .remove-btn {
+      background-color: #ff4d4d;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+    }
+    .remove-btn:hover {
+      background-color: #e60000;
+    }
+    .subscription-section {
+      margin-top: 30px;
+      background: #fefefe;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .subscription-section h2 {
+      color: #2b8a3e;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .subscription-section ul {
+      line-height: 1.7;
+      font-size: 0.95em;
+      color: #444;
+      max-width: 700px;
+      margin: auto;
+      text-align: left;
+    }
+    .total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 1.3em;
+      margin-top: 20px;
+    }
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      background-color: #ffb347;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .checkout-btn:hover {
+      background-color: #ff9800;
+    }
+    input[type="date"],
+    input[type="time"] {
+      padding: 5px;
+      margin: 5px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    select {
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>🛒 Your Cart — Nutri Paw</header>
+
+<div class="cart-container" id="cartContainer">
+  <p>Loading your items...</p>
+</div>
+
+<div id="subscriptionBox" class="subscription-section">
+  <h2>Nutri Paw Subscription Box 🐾</h2>
+  <p style="text-align:center; font-weight:bold;">₹499 – ₹4,799 (price varies by pet type)</p>
+
+  <ul>
+    <li><strong>Personalized:</strong> Mix of vitamins, food, and care products based on your pet’s age, size, breed, and health.</li>
+    <li><strong>Convenient Delivery:</strong> Monthly doorstep service — never run out.</li>
+    <li><strong>Complete Care:</strong> Covers food, supplements, and skin/paw health in one box.</li>
+    <li><strong>Natural Ingredients:</strong> Safe, high-quality, and effective formulations.</li>
+    <li><strong>Flexible Plans:</strong> Choose from monthly, quarterly, or custom options.</li>
+    <li><strong>Special Offers:</strong> Early access to new products and exclusive discounts.</li>
+    <li><strong>Eco-Friendly:</strong> Biodegradable/recyclable packaging.</li>
+    <li><strong>Expert Tips:</strong> Free pet care advice with every box.</li>
+    <li><strong>Trial Option:</strong> Starter boxes to test your pet’s preferences.</li>
+    <li><strong>Fun & Surprise:</strong> Seasonal toys or treats for excitement.</li>
+    <li><strong>First Aid Kit:</strong> Includes bandages, antiseptics, thermometers, and pet medicines.</li>
+  </ul>
+
+  <div style="text-align:center; margin-top:20px;">
+    <label for="petType" style="font-weight:bold;">Select Pet Type:</label>
+    <select id="petType" onchange="updateSubscriptionPrice()">
+      <option value="none">-- Select --</option>
+      <option value="hamster">Hamster - ₹499</option>
+      <option value="bird">Bird - ₹799</option>
+      <option value="cat">Cat - ₹1,499</option>
+      <option value="dog">Dog - ₹2,999</option>
+      <option value="turtle">Turtle - ₹1,999</option>
+      <option value="rabbit">Rabbit - ₹4,799</option>
+    </select>
+
+    <p id="subscriptionPrice" style="font-weight:bold; color:#2b8a3e;">No plan selected</p>
+
+    <label for="appointmentDate">Choose Appointment Date:</label>
+    <input type="date" id="appointmentDate">
+
+    <label for="appointmentTime">Choose Time:</label>
+    <input type="time" id="appointmentTime">
+
+    <button onclick="addSubscriptionToCart()" style="background-color:#4CAF50; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">
+      Add Subscription & Appointment to Cart
+    </button>
+  </div>
+</div>
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  function loadCart() {
+    const container = document.getElementById("cartContainer");
+    if (cart.length === 0) {
+      container.innerHTML = "<p>Your cart is empty. 🐾</p>";
+      return;
+    }
+
+    let html = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      total += item.price;
+      html += `
+        <div class="cart-item">
+          <div class="cart-item-details">
+            <h3>${item.name}</h3>
+            <p>₹${item.price}</p>
+            ${item.appointmentDate ? `
+              <p>📅 ${item.appointmentDate} ⏰ ${item.appointmentTime}</p>` : ""}
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+        </div>
+      `;
+    });
+
+    html += `<div class="total">Total: ₹${total}</div>
+             <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>`;
+    container.innerHTML = html;
+  }
+
+  function updateSubscriptionPrice() {
+    const petType = document.getElementById('petType').value;
+    const priceDisplay = document.getElementById('subscriptionPrice');
+    const priceMap = {
+      hamster: 499,
+      bird: 799,
+      cat: 1499,
+      dog: 2999,
+      turtle: 1999,
+      rabbit: 4799
+    };
+    const price = priceMap[petType] || 0;
+    priceDisplay.textContent = price ? `Selected Plan: ₹${price}` : "No plan selected";
+  }
+
+  function addSubscriptionToCart() {
+    const petType = document.getElementById('petType').value;
+    const appointmentDate = document.getElementById('appointmentDate').value;
+    const appointmentTime = document.getElementById('appointmentTime').value;
+
+    if (!petType || petType === 'none') {
+      alert("Please select a pet type first!");
+      return;
+    }
+    if (!appointmentDate || !appointmentTime) {
+      alert("Please select appointment date and time!");
+      return;
+    }
+
+    const priceMap = {
+      hamster: 499,
+      bird: 799,
+      cat: 1499,
+      dog: 2999,
+      turtle: 1999,
+      rabbit: 4799
+    };
+
+    const subscriptionItem = {
+      name: `Subscription Box - ${petType}`,
+      price: priceMap[petType],
+      appointmentDate,
+      appointmentTime
+    };
+
+    cart.push(subscriptionItem);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+    alert(`Subscription added for ₹${priceMap[petType]} on ${appointmentDate} at ${appointmentTime}`);
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+  }
+
+  function checkout() {
+    alert("Proceeding to checkout or login page...");
+    window.location.href = "login.html";
+  }
+
+  window.onload = loadCart;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nutri Paw 🐾 | Login</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    header {
+      background-color: #ffb347;
+      color: white;
+      text-align: center;
+      width: 100%;
+      padding: 20px 0;
+      border-radius: 12px;
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #ff9800;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-top: 6px;
+      font-size: 1em;
+    }
+
+    textarea {
+      resize: none;
+      height: 70px;
+    }
+
+    .subscription-info {
+      background-color: #fff4e1;
+      border-left: 5px solid #ffb347;
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 8px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-color: #f57c00;
+    }
+
+    .back-link {
+      text-align: center;
+      display: block;
+      margin-top: 10px;
+      text-decoration: none;
+      color: #555;
+    }
+
+    .back-link:hover {
+      color: #ff9800;
+    }
+  </style>
+</head>
+<body>
+
+<header>Nutri Paw 🐾 | Customer Login</header>
+
+<div class="form-container">
+  <h2>Enter Your Details</h2>
+
+  <form id="loginForm">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" required placeholder="Enter your full name" />
+
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" required placeholder="Enter your phone number" pattern="[0-9]{10}" />
+
+    <label for="address">Delivery Address:</label>
+    <textarea id="address" required placeholder="Enter your address"></textarea>
+
+    <label for="petType">Select Your Pet:</label>
+    <select id="petType" required>
+      <option value="">-- Choose your pet --</option>
+      <option value="dog">Dog</option>
+      <option value="cat">Cat</option>
+      <option value="bird">Bird</option>
+      <option value="hamster">Hamster</option>
+      <option value="turtle">Turtle</option>
+      <option value="rabbit">Rabbit</option>
+    </select>
+
+    <div class="subscription-info" id="subscriptionInfo">
+      Subscription: Not Selected
+    </div>
+
+    <button type="submit" class="btn">Confirm & Place Order</button>
+    <a href="cart.html" class="back-link">← Back to Cart</a>
+  </form>
+</div>
+
+<script>
+  // Load subscription details from cart
+  window.onload = function() {
+    const sub = JSON.parse(localStorage.getItem("subscription"));
+    const subBox = document.getElementById("subscriptionInfo");
+
+    if (sub) {
+      subBox.innerHTML = `
+        <strong>Subscription Plan:</strong> ${sub.petType.toUpperCase()} 🐾 
+        — ₹${sub.amount}/year <br>
+        <small>Includes fast & free delivery + early service booking.</small>
+      `;
+    } else {
+      subBox.innerHTML = "No active subscription. You can choose one from the cart.";
+    }
+  };
+
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
+    const petType = document.getElementById("petType").value;
+
+    const order = {
+      name,
+      phone,
+      address,
+      petType,
+      subscription: JSON.parse(localStorage.getItem("subscription")) || null,
+      cart: JSON.parse(localStorage.getItem("cart")) || []
+    };
+
+    console.log("Order Placed:", order);
+
+    alert(`Thank you ${name}! 🐾 Your order for ${petType} has been placed successfully.`);
+    localStorage.clear();
+    window.location.href = "index.html";
+  });
+</script>
+
+</body>
+</html>

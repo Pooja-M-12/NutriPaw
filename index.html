@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutri Paw 🐾 | Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:#f9f9f9;color:#333;scroll-behavior:smooth;}
+header{background:#4CAF50;color:white;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+header .logo{display:flex;align-items:center;}
+header .logo img{width:55px;height:55px;border-radius:50%;margin-right:10px;}
+header h1{font-size:1.6rem;}
+nav a{color:white;text-decoration:none;margin:0 12px;font-weight:600;transition:color 0.3s;}
+nav a:hover{color:#ffe082;}
+.menu-toggle{display:none;font-size:1.8rem;cursor:pointer;}
+.hero{background:url('https://thumbs.dreamstime.com/b/golden-retriever-cat-parrot-hamster-cozy-living-room-image-features-realistic-depiction-various-pets-cozy-322732000.jpg') center/cover no-repeat;color:white;text-align:center;padding:100px 20px;}
+.hero h2{font-size:2.5rem;margin-bottom:10px;text-shadow:1px 1px 4px rgba(0,0,0,0.6);}
+.hero p{font-size:1.2rem;text-shadow:1px 1px 3px rgba(0,0,0,0.5);}
+.btn{display:inline-block;background:#FFB300;color:white;padding:10px 20px;border-radius:25px;margin-top:20px;text-decoration:none;font-weight:600;transition:background 0.3s;}
+.btn:hover{background:#ffa000;}
+section{background:white;margin:30px 20px;padding:30px;border-radius:12px;box-shadow:0 3px 8px rgba(0,0,0,0.1);}
+h2{text-align:center;color:#4CAF50;margin-bottom:15px;}
+ul{list-style:none;padding-left:0;}
+ul li{margin:8px 0;font-size:1.1rem;}
+footer{text-align:center;padding:20px;background:#4CAF50;color:white;font-size:0.9rem;}
+@media(max-width:768px){nav{display:none;width:100%;flex-direction:column;background:#66bb6a;}nav.active{display:flex;} .menu-toggle{display:block;} nav a{margin:10px 0;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="https://files.imagetourl.net/uploads/1761127705617-cb4ab791-f7b2-4b2f-9703-89cad2ef63dc.jpg" alt="Nutri Paw Logo">
+    <h1>Nutri Paw 🐾</h1>
+  </div>
+  <div class="menu-toggle" id="menu-toggle">☰</div>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+     <a href="login.html">Login</a>
+    <a href="services.html">Services</a>
+    <a href="products.html">Products</a>
+    <a href="cart.html">Cart</a>
+    <a href="sustainability.html">Sustainability</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Your Pet’s Health, Our Passion</h2>
+  <p>Trusted care, expert nutrition, and unconditional love.</p>
+  <a href="services.html" class="btn">Book a Service</a>
+</section>
+
+<section>
+<h2>Welcome to Nutri Paw</h2>
+<p>Nutri Paw is your trusted partner in pet wellness — offering grooming, daycare, boarding, and personalized nutrition plans. We combine science-backed products with loving care to help your pets live their best lives. Our team treats every pet like family, ensuring safety, health, and happiness in a warm environment.</p>
+</section>
+
+<section>
+<h2>Why Choose Us?</h2>
+<ul>
+<li>🐾 <strong>Science-backed Products:</strong> Premium nutrition and supplements.</li>
+<li>🐶 <strong>Professional Care:</strong> Experienced groomers and vets.</li>
+<li>💚 <strong>Pet First Approach:</strong> Every pet’s health and happiness is our priority.</li>
+<li>🌿 <strong>Eco-friendly Practices:</strong> Sustainable packaging and cleaning.</li>
+<li>🏆 <strong>Trusted Brand:</strong> Transparency, honesty, and premium quality.</li>
+</ul>
+</section>
+
+<footer>
+<p>&copy; 2025 Nutri Paw. All rights reserved.</p>
+</footer>
+
+<script>
+const toggle=document.getElementById('menu-toggle');
+const nav=document.getElementById('nav');
+toggle.addEventListener('click',()=>nav.classList.toggle('active'));
+</script>
+</body>
+</html>
